@@ -5,8 +5,12 @@ import threading
 from typing import Dict, List
 
 from flask import Flask, request, jsonify
+# 安装 flask-cors: pip install flask-cors
+from flask_cors import CORS  # 新增引用
 
 app = Flask(__name__)
+CORS(app)  # 开启跨域
+
 
 # =========================
 # 全局状态（单轮模拟）

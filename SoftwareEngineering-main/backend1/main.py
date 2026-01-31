@@ -3,6 +3,18 @@ from pydantic import BaseModel
 from datetime import datetime
 import hashlib
 import uuid
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI(title="Prescription Backend (Backend1)")
+
+# 填入以下代码开启跨域允许
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许前端访问
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from ledger_client import (
     create_prescription as ledger_create,
@@ -149,3 +161,6 @@ def get_prescription(prescription_id: str):
     if prescription_id not in db:
         raise HTTPException(status_code=404, detail="Prescription not found")
     return db[prescription_id]
+
+# 如果你是通过命令行启动，请使用端口 8001:
+# uvicorn main:app --reload --port 8001
